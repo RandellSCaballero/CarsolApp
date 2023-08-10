@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from "react";
+import Navigation from "./Navigation";
+import { View } from "react-native";
+import AnimatedLottieView from "lottie-react-native";
+import tw from 'twrnc';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [isLoading, setIsLoading] = React.useState(true);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, [])
+
+  if( isLoading ){
+   return(
+    <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+      <AnimatedLottieView
+      source={require('./assets/loadingCar.json')}
+      autoPlay
+      loop
+      style={tw`w-[200] h-[200]`}
+      />
+    </View>
+   ) 
+  }else{
+    return (
+            <Navigation/>
+    );
+  }
+}
